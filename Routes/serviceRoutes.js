@@ -1,8 +1,10 @@
 var express = require('express');
 
-var routes = function (Service) {
-    var serviceRouter = express.Router();
+var routes = (Service) => {
 
+
+    var serviceRouter = express.Router();
+    var serviceController = require('../controllers/serviceController')(Service);
     serviceRouter.route('/')
         .post(function (req, res) {
             var service = new Service(req.body);
@@ -92,6 +94,6 @@ var routes = function (Service) {
             });
         });
     return serviceRouter;
-};
+}
 
 module.exports = routes;

@@ -1,6 +1,6 @@
 var express = require('express'),
-    mongoose = require('mongoose');
-bodyParser = require('body-parser');
+    mongoose = require('mongoose'),
+    bodyParser = require('body-parser');
 
 var db = mongoose.connect('mongodb://localhost/serviceAPI');
 
@@ -8,9 +8,6 @@ var Service = require('./models/serviceModel');
 var app = express();
 
 var port = process.env.PORT || 3000;
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
 
 // cors
 // Add headers
@@ -28,17 +25,20 @@ app.use(function (req, res, next) {
     next();
 });
 
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
 serviceRouter = require('./Routes/serviceRoutes')(Service);
 
 
 
 app.use('/api/services', serviceRouter);
 
-app.get('/', function (req, res) {
-    res.send('welcome to my API!');
+app.get('/', (req, res) => {
+    res.send('welcome');
 });
 
-app.listen(port, function () {
-    console.log('Gulp is running my app on PORT: ' + port);
+app.listen(port, () => {
+    console.log('running on port ${port}');
 
 });
